@@ -11,6 +11,7 @@ import datetime
 import wikipedia
 import webbrowser
 import requests
+import time
 
 # Function to speak using pyttsx3
 def speak_pyttsx3(text):
@@ -99,22 +100,7 @@ def run_alexa():
         url = 'https://google.nl/maps/place/' + location + '/&amp'
         webbrowser.get().open(url)
 
-    if datetime.datetime.now() == times['Fajr']:
-        speak_function("time of adahan el Fajr")
-
-    if datetime.datetime.now() == times['Dhuhr']:
-        speak_function("time of adahan el Dhuhr")
-
-    if datetime.datetime.now() == times['Asr']:
-        speak_function("time of adahan el Asr")
-
-    if datetime.datetime.now() == times['Maghrib']:
-        speak_function("time of adahan el Maghrib")
-
-    if datetime.datetime.now() == times['Isha']:
-        speak_function("time of adahan el Isha")
-
-    
+call_times = 0 # to make alexa remind me specific number of times
 while True:
     # Set your location coordinates (latitude, longitude)
     latitude = 29.9
@@ -130,5 +116,47 @@ while True:
 
     # Extract prayer times
     times = data['data']['timings']
+
+    
+    # praying reminder
+    if (datetime.datetime.now().strftime("%H:%M")) == times['Fajr']:
+        if call_times < 2:
+            speak_function("time of adahan el Fajr")
+            call_times += 1
+        elif call_times >= 2:
+            time.sleep(50.0)
+            call_times = 0
+
+    if (datetime.datetime.now().strftime("%H:%M")) == times['Dhuhr']:
+        if call_times < 2:
+            speak_function("time of adahan el Dhuhr")
+            call_times += 1
+        elif call_times >= 2:
+            time.sleep(50.0)
+            call_times = 0
+
+    if (datetime.datetime.now().strftime("%H:%M")) == times['Asr']:
+        if call_times < 2:
+            speak_function("time of adahan el Asr")
+            call_times += 1
+        elif call_times >= 2:
+            time.sleep(50.0)
+            call_times = 0
+
+    if (datetime.datetime.now().strftime("%H:%M")) == times['Maghrib']:
+        if call_times < 2:
+            speak_function("time of adahan el Maghrib")
+            call_times += 1
+        elif call_times >= 2:
+            time.sleep(50.0)
+            call_times = 0
+
+    if (datetime.datetime.now().strftime("%H:%M")) == times['Isha']:
+        if call_times < 2:
+            speak_function("time of adahan el Isha")
+            call_times += 1
+        elif call_times >= 2:
+            time.sleep(50.0)
+            call_times = 0
 
     run_alexa()
